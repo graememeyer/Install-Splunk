@@ -1,4 +1,10 @@
 # TODO elevate to administrator if necessary
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+  # Relaunch as an elevated process:
+  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+  exit
+}
 
 # Get the latest version number of Splunk
 $VersionNumber = "8.0.3" # Set default version 2020-04-30
@@ -26,3 +32,14 @@ Write-Host "Downloading from: $($DownloadUrl)"
 $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest $DownloadUrl -UseBasicParsing -OutFile $OutPath
 Write-Host "Wrote file to $($OutPath)"
+
+# Install Splunk Enterprise
+Write-Host "Installing Splunk with default settings."
+$DefaultUserName="admin"
+$DefaultPassword="password"
+$ArgumentList = "/I $($OutPath) AGREETOLICENSE=Yes SPLUNKUSERNAME=$($DefaultUserName) SPLUNKPASSWORD=$($DefaultPassword) INSTALL_SHORTCUT=1 /quiet" 
+Write-Host "$($ArgumentList)"
+Start-Process msiexec.exe -Wait -ArgumentList $ArgumentList
+Write-Host "Splunk installed with default credentials. UserName:admin Password:password"
+Start-Process microsoft-edge:http://localhost:8000
+Read-Host
