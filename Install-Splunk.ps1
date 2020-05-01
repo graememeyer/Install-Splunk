@@ -3,7 +3,7 @@
 # Get the latest version number of Splunk
 $VersionNumber = "8.0.3" # Set default version 2020-04-30
 $FileName = "splunk-8.0.3-a6754d8441bf-x64-release.msi" # Set default FileName 2020-04-30
-$Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html"
+$Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html" -UseBasicParsing
 foreach($Link in $Site.links)
 {
     if($Link.innerHTML -match "splunk-(?<version>\d+\.\d+\.\d+)-\w+-x64-release.msi")
@@ -24,5 +24,5 @@ $OutPath = "$($env:USERPROFILE)\Desktop\$($FileName)"
 
 Write-Host "Downloading from: $($DownloadUrl)"
 $ProgressPreference = 'SilentlyContinue'
-Invoke-WebRequest $DownloadUrl -OutFile $OutPath
+Invoke-WebRequest $DownloadUrl -UseBasicParsing -OutFile $OutPath
 Write-Host "Wrote file to $($OutPath)"
