@@ -5,9 +5,9 @@ Release Goals:
 * Detect the latest version of Splunk ✔
 * Download the latest version of Splunk ✔
 * Time the download and output the results
-* Install with default settings
-* No user interaction required
-* Automatically create required accounts and return credentials to the user
+* Install with default settings ✔
+* No user interaction required ✔
+* Automatically create required accounts and return credentials to the user ✔
 
 
 Stretch Goals:
