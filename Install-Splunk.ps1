@@ -1,4 +1,4 @@
-# TODO elevate to administrator if necessary
+# Elevate to administrator if necessary
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 {
   # Relaunch as an elevated process:
@@ -34,12 +34,13 @@ Invoke-WebRequest $DownloadUrl -UseBasicParsing -OutFile $OutPath
 Write-Host "Wrote file to $($OutPath)"
 
 # Install Splunk Enterprise
-Write-Host "Installing Splunk with default settings."
+Write-Host "Installing Splunk with default settings..."
 $DefaultUserName="admin"
 $DefaultPassword="password"
 $ArgumentList = "/I $($OutPath) AGREETOLICENSE=Yes SPLUNKUSERNAME=$($DefaultUserName) SPLUNKPASSWORD=$($DefaultPassword) INSTALL_SHORTCUT=1 /quiet" 
-Write-Host "$($ArgumentList)"
 Start-Process msiexec.exe -Wait -ArgumentList $ArgumentList
+
 Write-Host "Splunk installed with default credentials. UserName:admin Password:password"
+Read-Host "Press any key to start Splunk in MS Edge"
 Start-Process microsoft-edge:http://localhost:8000
 Read-Host
