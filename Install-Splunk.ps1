@@ -28,19 +28,22 @@ $Platform = "windows"
 $DownloadUrl = $BaseDownloadUrl + $VersionNumber + "/" + $Platform + "/" + $FileName
 $OutPath = "$($env:USERPROFILE)\Desktop\$($FileName)"
 
-Write-Host "Downloading from: $($DownloadUrl)"
+Write-Output "Downloading from: $($DownloadUrl)"
 $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest $DownloadUrl -UseBasicParsing -OutFile $OutPath
-Write-Host "Wrote file to $($OutPath)"
+Write-Output "Wrote file to $($OutPath)"
 
 # Install Splunk Enterprise
-Write-Host "Installing Splunk with default settings..."
+Write-Output "Installing Splunk with default settings..."
 $DefaultUserName="admin"
 $DefaultPassword="password"
 $ArgumentList = "/I $($OutPath) AGREETOLICENSE=Yes SPLUNKUSERNAME=$($DefaultUserName) SPLUNKPASSWORD=$($DefaultPassword) INSTALL_SHORTCUT=1 /quiet" 
 Start-Process msiexec.exe -Wait -ArgumentList $ArgumentList
 
-Write-Host "Splunk installed with default credentials. UserName:admin Password:password"
+Write-Output "Splunk installed with default credentials. UserName:admin Password:password"
+Write-Output "Cleaning up the downloads."
+Remove-Item $OutPath
+
 Read-Host "Press any key to start Splunk in MS Edge"
 Start-Process microsoft-edge:http://localhost:8000
-Read-Host
+Read-Host "Reminder, your Splunk credentials are: UserName:admin Password:password"
