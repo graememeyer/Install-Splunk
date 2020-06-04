@@ -42,7 +42,6 @@ foreach($Link in $Site.links)
         Write-Output "Found version: $($VersionNumber)"
         break;
     }
-    Write-Output "No more recent version was found. Proceeding with $($VersionNumber)"
 }
 break
 
