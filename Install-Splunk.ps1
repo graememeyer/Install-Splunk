@@ -43,7 +43,7 @@ foreach($Link in $Site.links)
         break;
     }
 }
-break
+
 
 # Download the latest version of Splunk
 # https://download.splunk.com/products/splunk/releases/8.0.3/windows/splunk-8.0.3-a6754d8441bf-x64-release.msi
