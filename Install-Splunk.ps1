@@ -7,8 +7,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 } #>
 
 # Get the latest version number of Splunk
-$VersionNumber = "8.0.3" # Set default version 2020-04-30
-$FileName = "splunk-8.0.3-a6754d8441bf-x64-release.msi" # Set default FileName 2020-04-30
+$VersionNumber = "8.0.5" # Set default version 2020-04-30
+$FileName = "splunk-8.0.5-a1a6394cc5ae-x64-release.msi" # Set default FileName 2020-04-30
 
 try {
   Write-Output "Attempting to determine the latest version of Splunk..."
