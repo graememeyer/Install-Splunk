@@ -26,7 +26,7 @@ try {
   try {
     Write-Output "Trying again..."
     Write-Output "Attempting to determine the latest version of Splunk"
-    $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html"
+    $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html%3Fac%3DAdwords_Loglogic"
   } catch {
     Write-Output "Unable to determine the latest version, proceeding with version $($VersionNumber)"
   }
