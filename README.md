@@ -1,6 +1,13 @@
 # Install-Splunk
 PowerShell script to download and install Splunk Enterprise 
 
+Try this to install directly from PowerShell:
+
+```PowerShell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/graememeyer/Install-Splunk/master/Install-Splunk.ps1'))
+```
+
+
 Release Goals:
 * Detect the latest version of Splunk ✔
 * Download the latest version of Splunk ✔
