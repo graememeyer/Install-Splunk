@@ -12,7 +12,7 @@ $FileName = "splunk-8.0.5-a1a6394cc5ae-x64-release.msi" # Set default FileName 2
 
 try {
   Write-Output "Attempting to determine the latest version of Splunk..."
-  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html"
+  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html%3Fac%3DAdwords_Loglogic"
 
 } Catch [NotSupportedException] {
   Write-Output "NotSupportedException - Internet Explorer appears not to be initialised."
