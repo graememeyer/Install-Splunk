@@ -7,8 +7,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 } #>
 
 # Get the latest version number of Splunk
-$VersionNumber = "8.0.5" # Set default version 2020-04-30
-$FileName = "splunk-8.0.5-a1a6394cc5ae-x64-release.msi" # Set default FileName 2020-04-30
+$VersionNumber = "8.1.0" # Set default version 2020-11-05
+$FileName = "splunk-8.1.0-f57c09e87251-x64-release.msi" # Set default FileName 2020-11-05
 
 try {
   Write-Output "Attempting to determine the latest version of Splunk..."
@@ -46,7 +46,7 @@ foreach($Link in $Site.links)
 
 
 # Download the latest version of Splunk
-# https://download.splunk.com/products/splunk/releases/8.0.3/windows/splunk-8.0.3-a6754d8441bf-x64-release.msi
+# https://download.splunk.com/products/splunk/releases/8.1.0/windows/splunk-8.1.0-f57c09e87251-x64-release.msi
 $BaseDownloadUrl = "https://download.splunk.com/products/splunk/releases/"
 $Platform = "windows"
 $DownloadUrl = $BaseDownloadUrl + $VersionNumber + "/" + $Platform + "/" + $FileName
