@@ -14,36 +14,21 @@ try {
   Write-Output "Attempting to determine the latest version of Splunk..."
   $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html%3Fac%3DAdwords_Loglogic" -UseBasicParsing
 
-} Catch [NotSupportedException] {
-  Write-Output "NotSupportedException - Internet Explorer appears not to be initialised."
-  Write-Output "Attempting to work around..."
-  try {
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Internet Explorer\Main" -Name "DisableFirstRunCustomize" -Value 2
-  }
-  catch {
-    Write-Output 'Unable to set the HKLM:\SOFTWARE\Microsoft\Internet Explorer\Main "DisableFirstRunCustomize" registry value.'
-  }
-  try {
-    Write-Output "Trying again..."
-    Write-Output "Attempting to determine the latest version of Splunk"
-    $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html%3Fac%3DAdwords_Loglogic" -UseBasicParsing
-  } catch {
+} catch {
     Write-Output "Unable to determine the latest version, proceeding with version $($VersionNumber)"
-  }
 }
-
 
 foreach($Link in $Site.links)
 {
-    if($Link.innerHTML -match "splunk-(?<version>\d+\.\d+\.\d+)-\w+-x64-release.msi")
+    if($Link.outerHTML -match "(?<fullmatch>https://download.splunk.com/products/splunk/releases/(?<version>\d+(\.\d+)+)/windows/(?<filename>splunk-\d+(\.\d+)+-\w+-x64-release.msi))")
     {
-        $FileName = $Link.innerHTML
+        # $DownloadUrl = $Matches.fullmatch 
+        $FileName = $Matches.filename
         $VersionNumber = $Matches.version # Set the new version number if successfully obtained
         Write-Output "Found version: $($VersionNumber)"
         break;
     }
 }
-
 
 # Download the latest version of Splunk
 # https://download.splunk.com/products/splunk/releases/8.1.0/windows/splunk-8.1.0-f57c09e87251-x64-release.msi
