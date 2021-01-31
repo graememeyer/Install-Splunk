@@ -16,6 +16,11 @@ Release Goals:
 * No user interaction required ✔
 * Automatically create required accounts and return credentials to the user ✔
 
+To-Do:
+* Increase the upload limit for the web interface
+* Set an all-user powershell alias for Splunk
+* Detect and automatically install Splunk Enterprise Security 
+  * Ask the user if they want to install it / provide a path to an ES binary
 
 Stretch Goals:
 * Graceful failure
