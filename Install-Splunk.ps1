@@ -12,7 +12,7 @@ $FileName = "splunk-8.1.0.1-24fd52428b5a-x64-release.msi" # Set default FileName
 
 try {
   Write-Output "Attempting to determine the latest version of Splunk..."
-  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/sem.html%3Fac%3DAdwords_Loglogic" -UseBasicParsing
+  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/previous-releases.html" -UseBasicParsing
 
 } catch {
     Write-Output "Unable to determine the latest version, proceeding with version $($VersionNumber)"
