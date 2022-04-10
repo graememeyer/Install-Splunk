@@ -7,31 +7,24 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 } #>
 
 # Get the latest version number of Splunk
-$VersionNumber = "8.2.2.1" # Set default version 2021-11-28
-$FileName = "splunk-8.2.2.1-ae6821b7c64b-x64-release.msi" # Set default FileName 2021-11-28
+$VersionNumber = "8.2.6" # Set default version 2021-11-28
+$FileName = "splunk-8.2.6-a6fe1ee8894b-x64-release.msi" # Set default FileName 2021-11-28
 
 try {
   Write-Output "Attempting to determine the latest version of Splunk..."
-  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/previous-releases.html" -UseBasicParsing
+  $Site = Invoke-WebRequest "https://www.splunk.com/en_us/download/splunk-enterprise.html" -UseBasicParsing
 
 } catch {
     Write-Output "Unable to determine the latest version, proceeding with version $($VersionNumber)"
 }
 
-foreach($Link in $Site.links)
-{
-    if($Link.outerHTML -match "(?<fullmatch>https://download.splunk.com/products/splunk/releases/(?<version>\d+(\.\d+)+)/windows/(?<filename>splunk-\d+(\.\d+)+-\w+-x64-release.msi))")
-    {
-        # $DownloadUrl = $Matches.fullmatch 
-        $FileName = $Matches.filename
-        $VersionNumber = $Matches.version # Set the new version number if successfully obtained
-        Write-Output "Found version: $($VersionNumber)"
-        break;
-    }
-}
+[String] $FileName = $Site.Links.ForEach({echo $_ | Select-String -Pattern '(splunk-\d+\.\d+\.\d+(\.\d+)?-\w+-x64-release.msi)' | foreach {$_.Matches} | Select-Object -ExpandProperty Value })
+
+$FileName -Match '(?<VersionNumber>\d+\.\d+\.\d+(\.\d+)?)' | Out-Null
+$VersionNumber = $Matches.VersionNumber
 
 # Download the latest version of Splunk
-# https://download.splunk.com/products/splunk/releases/8.2.2.1/windows/splunk-8.2.2.1-ae6821b7c64b-x64-release.msi
+# https://download.splunk.com/products/splunk/releases/8.2.6/windows/splunk-8.2.6-a6fe1ee8894b-x64-release.msi
 $BaseDownloadUrl = "https://download.splunk.com/products/splunk/releases/"
 $Platform = "windows"
 $DownloadUrl = $BaseDownloadUrl + $VersionNumber + "/" + $Platform + "/" + $FileName
